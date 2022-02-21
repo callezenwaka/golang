@@ -1,0 +1,36 @@
+{
+  "name": "hardhat-project",
+  "description": "This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.",
+  "version": "1.0.0",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -r dotenv/config index.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0",
+    "ipfs-http-client": "^50.1.2",
+    "axios": "^0.26.0",
+    "cors": "^2.8.5",
+    "ethers": "^5.5.4",
+    "express": "^4.17.1",
+    "multer": "^1.4.4"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.2",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.4",
+    "hardhat": "^2.8.4",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.15"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
