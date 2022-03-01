@@ -1,13 +1,14 @@
 'use strict';
 
 // Import packages
-// const { isAuthenticated } = require('./lib/auth');
-const { ethers } = require("ethers");
 const express = require('express');
 const cors = require('cors')
 const os = require('os')
 const app = express();
 
+// const crypto = require('crypto').randomBytes(64).toString('hex');
+// console.log(crypto);
+// 
 
 // Route middleware
 app.use(cors());
@@ -24,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 // Verify request
-// app.use('/', isAuthenticated);
+app.use('/', require("./routes/auth"));
 app.use('/nft', require("./routes/nft"));
 
 // notfound route handler
