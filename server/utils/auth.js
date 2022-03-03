@@ -31,7 +31,6 @@ const authenticate = (req, res, next) => {
 			// 
 			const { authToken } = req;
 			req.payload = verify(authToken, process.env.ACCESS_TOKEN_SECRET);
-			
 			return next();
 		} catch (error) {
 			return res.status(401).json("Unauthorized");
@@ -42,7 +41,7 @@ const authenticate = (req, res, next) => {
 
 const generateAccessToken = (privateKey) => {
   return sign({privateKey}, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '5m',
+    expiresIn: '15m',
   });
 }
 

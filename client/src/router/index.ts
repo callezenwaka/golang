@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/Home.vue';
+import store from '@/store';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -8,13 +9,56 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/asset',
+    name: 'Asset',
+    component: () => import(/* webpackChunkName: "asset" */ '../views/Asset.vue'),
+    meta: { requiresAuth: true },
+    beforeEnter: (to) => {
+      // reject the navigation
+      if (!store.getters.isAuthenticated && to.name !== 'Login') {
+        return { name: 'Login' }
+      }
+    },
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+    meta: { requiresAuth: true },
+    beforeEnter: (to) => {
+      // reject the navigation
+      if (!store.getters.isAuthenticated && to.name !== 'Login') {
+        return { name: 'Login' }
+      }
+    },
+  },
+  {
+    path: '/mint',
+    name: 'Mint',
+    component: () => import(/* webpackChunkName: "mint" */ '../views/Mint.vue'),
+    meta: { requiresAuth: true },
+    beforeEnter: (to) => {
+      // reject the navigation
+      if (!store.getters.isAuthenticated && to.name !== 'Login') {
+        return { name: 'Login' }
+      }
+    },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+  },
+	{
+		path: '/404',
+		name: 'NotFound',
+		component: () => import('../views/NotFound.vue'),
+		meta: { guest: true },
+	},
+	{
+		path: "/:catchAll(.*)", // Unrecognized path automatically matches 404
+		redirect: { name: 'NotFound' }
+	}
 ]
 
 const router = createRouter({

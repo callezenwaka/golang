@@ -16,11 +16,7 @@ router.get('/market', authenticate, nft.getMarket);
 router.post('/', authenticate, nft.postOne);
 
 router.post('/image', authenticate, multer.single('file'), nft.postImage);
- 
-// router.put('/:id', isAgent('update'), agent.updateOne);
 
 router.get('/:id', authenticate, nft.getOne);
- 
-// router.delete('/:id', isSuperagent('delete'), agent.deleteOne);
  
 module.exports = router;

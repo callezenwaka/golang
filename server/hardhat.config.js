@@ -1,8 +1,4 @@
 require("@nomiclabs/hardhat-waffle");
-// import fs from "fs";
-const fs = require("fs");
-const privateKey = fs.readFileSync("./secrets/privateKey").toString();
-const projectId = fs.readFileSync("./secrets/projectId").toString();
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -15,8 +11,8 @@ module.exports = {
       chainId: 31337
     },
     ropsten: {
-      url: `https://ropsten.infura.io/v3/${projectId}`,
-      accounts: [privateKey]
+      url: `https://ropsten.infura.io/v3/${process.env.PROJECT_ID}`,
+      accounts: [process.env.PRIVATE_KEY]
     }
   },
   solidity: "0.8.4",

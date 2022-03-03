@@ -103,10 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-# server config
-server/config.js
-# server secrets
-server/secrets
 # server env
 server/.env
 # server modules
@@ -119,21 +115,9 @@ server/typechain
 server/coverage
 server/coverage.json
 
-# client config
-client/config
-# server secrets
-client/secrets
 # server env
 client/.env
 # server modules
 client/node_modules
-# server Hardhat files
-client/cache
-client/artifacts
-# others
-client/typechain
-client/coverage
-client/coverage.json
-
 
 Notes.md
