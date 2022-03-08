@@ -63,7 +63,7 @@ exports.login = async (req, res, next) => {
       return res.status(403).json('Forbidden!')
     }
 
-    const payload = await verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const payload = await verify(refreshToken, `${process.env.REFRESH_TOKEN_SECRET}`);
 
     /* create a generic provider and query for unsold market items */
     const provider = new ethers.providers.JsonRpcProvider(`https://ropsten.infura.io/v3/${process.env.PROJECT_ID}`);

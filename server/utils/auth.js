@@ -30,7 +30,7 @@ const authenticate = (req, res, next) => {
 		try {
 			// 
 			const { authToken } = req;
-			req.payload = verify(authToken, process.env.ACCESS_TOKEN_SECRET);
+			req.payload = verify(authToken, `${process.env.ACCESS_TOKEN_SECRET}`);
 			return next();
 		} catch (error) {
 			return res.status(401).json("Unauthorized");
@@ -40,13 +40,13 @@ const authenticate = (req, res, next) => {
 // [END CHECK AUTH]
 
 const generateAccessToken = (privateKey) => {
-  return sign({privateKey}, process.env.ACCESS_TOKEN_SECRET, {
+  return sign({privateKey}, `${process.env.ACCESS_TOKEN_SECRET}`, {
     expiresIn: '15m',
   });
 }
 
 const generateRefreshToken = (privateKey) => {
-  return sign({privateKey}, process.env.REFRESH_TOKEN_SECRET);
+  return sign({privateKey}, `${process.env.REFRESH_TOKEN_SECRET}`);
 }
 
 module.exports = {
