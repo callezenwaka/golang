@@ -23,7 +23,8 @@ export const request = async <T = never, R = AxiosResponse<T>>(url: string, meth
 };
 
 // Uncomment for local development
-export const API_URL = 'http://localhost:4000/';
+// export const API_URL = 'http://localhost:4000/';
+export const API_URL = `https://fullstack-nft.herokuapp.com/`;
 
 export default {
 	async addNftImage(token: string, params: File): Promise<string> {
