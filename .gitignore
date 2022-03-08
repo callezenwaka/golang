@@ -119,5 +119,3 @@ server/coverage.json
 client/.env
 # server modules
 client/node_modules
-
-Test.md
