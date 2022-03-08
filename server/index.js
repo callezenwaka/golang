@@ -41,12 +41,12 @@ app.use((error, req, res, next) => {
   });
 });
 
-const network = os.networkInterfaces().en0.find(elm => elm.family=='IPv4').address;
+// const network = os.networkInterfaces().en0.find(elm => elm.family=='IPv4').address;
 // Set up port and start the server
 app.listen( process.env.PORT, () => {
   console.log(`Server running at:`);
   console.log(`- Local: http://localhost:${process.env.PORT}`);
-  console.log(`- Network: http://${network}:${process.env.PORT}`);
+  // console.log(`- Network: http://${network}:${process.env.PORT}`);
 });
 
 module.exports = app;
