@@ -107,9 +107,7 @@ dist
 server/.env
 # server modules
 server/node_modules
-# server Hardhat files
-server/cache
-server/artifacts
+
 # others
 server/typechain
 server/coverage
