@@ -14,7 +14,7 @@
         </template>
 
         <template #footer>
-          <div class="card--footer">
+          <div v-if="isAuthenticated" class="card--footer">
             <button type="button" class="button" @click="handleBuy(nft)">Buy</button>
           </div>
         </template>
@@ -41,11 +41,12 @@ export default defineComponent({
     const getNft = (nft: Nft) => store.dispatch('getNft', nft);
     onMounted(async () => await getNfts());
     const nfts = computed((): Nft[] => store.getters.nfts);
+    const isAuthenticated = computed(() => store.getters.isAuthenticated);
     const handleBuy = async (nft: Nft) => {
       await getNft(nft);
     };
 
-    return { nfts, handleBuy }
+    return { nfts, isAuthenticated, handleBuy }
   },
 })
 </script>
