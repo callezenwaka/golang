@@ -7,3 +7,15 @@ go mod init github.com/callezenwaka/golang	# Initialize a Go module (creates go.
 go run .	# Run all Go files in current directory as a program
 go build	# Build all Go files into an executable binary
 ```
+
+## Build
+```bash
+go build && ./<file-name>
+```
+
+## Env
+```bash
+go get github.com/joho/godotenv
+go mod vendor
+go mod tidy
+```
