@@ -19,3 +19,25 @@ go get github.com/joho/godotenv
 go mod vendor
 go mod tidy
 ```
+
+## DB
+```bash
+chmod +x run_migrations.sh
+./run_migrations.sh
+```
+
+## Run with arguments:
+### To apply all pending migrations
+```Bash
+./run_migrations.sh up
+```
+
+### To revert the last applied migration:
+```Bash
+./run_migrations.sh down
+```
+
+### To revert all migrations:
+```Bash
+./run_migrations.sh down-to 0
+```
