@@ -82,6 +82,7 @@ func main() {
 	v1Router.Post("/feed_follows", apiconfig.middleware_auth(apiconfig.handlerCreateFeedFollow));
 	v1Router.Get("/feed_follows", apiconfig.middleware_auth(apiconfig.handlerGetFeedFollows));
 	v1Router.Delete("/feed_follows/{feedFollowID}", apiconfig.middleware_auth(apiconfig.handlerDeleteFeedFollow));
+	v1Router.Get("/posts", apiconfig.middleware_auth(apiconfig.handlerPostsGet));
 	router.Mount("/v1", v1Router);
 
 	server := &http.Server {

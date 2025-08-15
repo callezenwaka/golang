@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -12,9 +13,9 @@ import (
 
 func (apiconfig apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Request, user database.User) {
 	type parameters struct {
-		Title   string `json:"title"`
+		Name        string `json:"name"`
 		Description string `json:"description"`
-		Url     string `json:"url"`
+		Url         string `json:"url"`
 	}
 
 	decoder := json.NewDecoder(r.Body);
@@ -27,8 +28,8 @@ func (apiconfig apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Requ
 	feed, err := apiconfig.DB.CreateFeed(r.Context(), database.CreateFeedParams{
 		ID:        uuid.New(),
 		UserID:   user.ID,
-		Title:    params.Title,
-		Description:  params.Description,
+		Name:    params.Name,
+		Description: sql.NullString{String: params.Description, Valid: params.Description != ""},
 		Url:      params.Url,
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),

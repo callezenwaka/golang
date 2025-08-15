@@ -1,6 +1,6 @@
 -- name: CreateFeed :one
-INSERT INTO feeds (id, user_id, title, description, url, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7)
+INSERT INTO feeds (id, user_id, name, description, url, image_url, created_at, updated_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 RETURNING *;
 
 -- name: GetFeeds :many
@@ -10,7 +10,7 @@ ORDER BY created_at DESC
 LIMIT $1
 OFFSET $2;
 
--- name: GetNextFeedToFetch :many
+-- name: GetNextFeedsToFetch :many
 SELECT * FROM feeds
 ORDER BY last_fetched_at ASC NULLS FIRST
 LIMIT $1;
