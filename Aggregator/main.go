@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/callezenwaka/golang/Aggregator/internal/database"
 	"github.com/go-chi/chi"
@@ -19,6 +20,11 @@ type apiConfig struct {
 }
 
 func main() {
+	// feed, err := urlFeed("https://wagslane.dev/index.xml");
+	// if err != nil {
+	// 	log.Fatal(err);
+	// }
+	// fmt.Println(feed);
 	
 	err := godotenv.Load();
 	if err != nil {
@@ -41,17 +47,19 @@ func main() {
 		fmt.Printf("✅ Server is running on port %s\n", PORT);
 	}
 
-	db, err := sql.Open("postgres", databaseURL)
+	conn, err := sql.Open("postgres", databaseURL)
 	if err != nil {
 		log.Fatalf("❌ Error connecting to the database: %v", err)
 	}
-	defer db.Close()
+	defer conn.Close()
 
-	queries := database.New(db);
+	db := database.New(conn)
 
 	apiconfig := apiConfig{
-		DB: queries,
+		DB: db,
 	};
+
+	go startScraping(db, 10, time.Minute);
 
 	router := chi.NewRouter();
 
@@ -71,6 +79,9 @@ func main() {
 	v1Router.Get("/users", apiconfig.middleware_auth(apiconfig.handlerGetUser));
 	v1Router.Post("/feeds", apiconfig.middleware_auth(apiconfig.handlerCreateFeed));
 	v1Router.Get("/feeds", apiconfig.handlerGetFeeds);
+	v1Router.Post("/feed_follows", apiconfig.middleware_auth(apiconfig.handlerCreateFeedFollow));
+	v1Router.Get("/feed_follows", apiconfig.middleware_auth(apiconfig.handlerGetFeedFollows));
+	v1Router.Delete("/feed_follows/{feedFollowID}", apiconfig.middleware_auth(apiconfig.handlerDeleteFeedFollow));
 	router.Mount("/v1", v1Router);
 
 	server := &http.Server {

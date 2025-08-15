@@ -35,7 +35,7 @@ func (apiconfig apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Requ
 	});
 
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, fmt.Sprintf("Error creating user: %v", err));
+		respondWithError(w, http.StatusInternalServerError, fmt.Sprintf("Error creating feed: %v", err));
 		return;
 	}
 
