@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Realtime Typer Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        #typer { width: 100%; font-size: 1.2em; padding: 10px; }
+        #output { margin-top: 20px; font-size: 1.2em; color: #333; }
+        #response { margin-top: 20px; font-size: 1.2em; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Realtime Event Stream</h1>
+    <!-- <input id="typer" type="text" placeholder="Start typing..." autocomplete="off" /> -->
+    <div id="response"></div>
+    <script>
+        // const typer = document.getElementById('typer');
+        // const output = document.getElementById('output');
+        // typer.addEventListener('input', () => {
+        //     output.textContent = typer.value;
+        // });
+
+        var sse = new EventSource('/events');
+        var response = document.getElementById('response');
+
+        sse.onmessage = function(event) {
+            response.innerHTML += event.data + " ";
+        }
+
+        sse.onerror = function(event) {
+            setTimeout(() => (response.innerHTML = ''), 1000);
+            console.error("EventSource failed:", event);
+            sse.close();
+        };
+    </script>
+</body>
+</html>

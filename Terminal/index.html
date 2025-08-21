@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Terminal</title>
+    <style>
+        /* body { background-color: #2e3440; color: #eceff4; font-family: 'Courier New', Courier, monospace; margin: 0; padding: 20px; } */
+        /* #terminal { width: 100%; height: 80vh; background-color: #2e3440; border: none; outline: none; caret-color: #88c0d0; resize: none; color: #eceff4; font-size: 14px; } */
+        body { background-color: #2e3440; color: #eceff4; font-family: 'Courier New', Courier, monospace; margin: 0; padding: 20px; }
+        #terminal-input-container { display: flex; align-items: center; }
+        #terminal-output { white-space: pre; font-size: 14px; color: #eceff4; }
+        #terminal-input { background-color: #2e3440; border: none; outline: none; caret-color: #88c0d0; resize: none; color: #eceff4; font-size: 14px; width: 100%; }
+        .prompt { color: #a3be8c; }
+    </style>
+</head>
+<body>
+    <h1>Online Terminal</h1>
+    <!-- <textarea id="terminal" autofocus title="Terminal input area" placeholder="Type your commands here"></textarea> -->
+    <div id="terminal-output"></div>
+    <!-- <span class="prompt">$</span> <input id="terminal-input" autofocus /> -->
+    <div id="terminal-input-container"><span class="prompt">$</span> <input id="terminal-input" autofocus title="Enter terminal command" placeholder="Type your command here" /></div>
+
+    <script>
+        const output = document.getElementById('terminal-output');
+        const input = document.getElementById('terminal-input');
+        const ws = new WebSocket("ws://localhost:8080/ws");
+        
+        let commandBuffer = '';
+
+        ws.onopen = function() {
+            output.textContent = "Connected to terminal...\n";
+            input.focus();
+        };
+
+        ws.onmessage = function(event) {
+            output.textContent += event.data;
+            output.scrollTop = output.scrollHeight;
+        };
+
+        ws.onclose = function() {
+            output.textContent += "\nDisconnected.";
+        };
+
+        ws.onerror = function(error) {
+            console.error("WebSocket error:", error);
+        };
+        
+        input.addEventListener('keydown', function(event) {
+            event.preventDefault(); 
+            
+            if (event.key === 'Enter') {
+                // Manually print the command to the output before sending
+                output.textContent += `$ ${input.value}\n`;
+
+                // Send the command followed by a newline
+                ws.send(input.value + '\n');
+                
+                // Clear the input field for the next command
+                input.value = '';
+                commandBuffer = '';
+
+            } else if (event.key === 'Backspace') {
+                if (commandBuffer.length > 0) {
+                    commandBuffer = commandBuffer.slice(0, -1);
+                    input.value = commandBuffer;
+                }
+            } else {
+                commandBuffer += event.key;
+                input.value = commandBuffer;
+            }
+        });
+    </script>
+</body>
+</html>
